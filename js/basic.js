@@ -11,28 +11,13 @@ const events = {
   onDataLoad: (evt) => {
     console.log('onDataLoad');
     console.log(evt);
-    const data = evt.sheet.getDataRows();
-    data.forEach((row) => {
-      const comparisonVal = evt.sheet.getValue({
-        row: row,
-        col: 'colName2',
-      });
-      if (comparisonVal === '2') {
-        console.log('컬럼2가 2입니다.');
-        evt.sheet.setAttribute(row, 'chk', 'CanEdit', 0);
-      }
-      if (comparisonVal === '3') {
-        console.log('컬럼2가 3입니다.');
-        row['CanEdit'] = 0;
-      }
-      if (comparisonVal === '4') {
-        evt.sheet.setValue(row, 'chk', 1);
-      }
-    });
-    evt.sheet.setAttribute(null, 'colName5', 'CanEdit', 0);
   },
   onRenderFinish: (evt) => {
     console.log('onRenderFinish');
+    console.log(evt);
+  },
+  onClick: (evt) => {
+    console.log('onClick');
     console.log(evt);
   },
 };
@@ -58,6 +43,7 @@ const DATA = [
   { colName1: '4', colName2: '6' },
 ];
 const sht1 = IBSheet.create({
+  id: 'sht1',
   el: 'sheetDiv1',
   options: OPT,
 });
@@ -73,11 +59,3 @@ setTimeout(() => {
   sht1.loadSearchData(DATA);
   sht2.loadSearchData(DATA);
 }, 1000);
-// sht1.loadSearchData(DATA);
-// sht2.loadSearchData(DATA);
-
-btnDel.addEventListener('click', (e) => {
-  sht1.getRowsByChecked('chk').forEach((row) => {
-    console.log(row['colName2']);
-  });
-});
